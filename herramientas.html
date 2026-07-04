@@ -110,7 +110,18 @@
   }
   .tool-icon.acad{color:#c8102e;}
   .tool-card-header.premium .tool-icon{color:#c8900a;}
+  .tool-card-header{position:relative;}
   .tool-card-header h3{font-size:18px;font-weight:700;color:var(--navy-dark);}
+  .show-btn{
+    position:absolute;bottom:10px;right:12px;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 14px;border:1px solid var(--border);border-radius:6px;
+    background:#fff;color:var(--text-gray);font-size:12px;font-weight:500;
+    cursor:pointer;opacity:0;transition:opacity 0.2s;
+    font-family:'Inter',sans-serif;
+  }
+  .show-btn:hover{color:var(--navy-dark);border-color:var(--navy-dark);}
+  .tool-card-header:hover .show-btn{opacity:1;}
   .tool-card-body{padding:20px 24px 24px;}
   .tool-card-body p{font-size:14px;color:var(--text-gray);line-height:1.6;margin-bottom:16px;}
   .tool-price{font-size:22px;font-weight:800;color:var(--navy-dark);margin-bottom:16px;}
@@ -214,6 +225,7 @@
       <div class="tool-card-header">
         <div class="tool-icon"><i class="fa-solid fa-table"></i></div>
         <h3>GEOCOORD</h3>
+        <button class="show-btn"><i class="fa-solid fa-play"></i> Mostrar</button>
       </div>
       <div class="tool-card-body">
         <p>Extrae coordenadas de puntos, bloques y entidades en AutoCAD. Exporta a CSV, TXT o directamente a tabla en el dibujo.</p>
@@ -232,6 +244,7 @@
       <div class="tool-card-header">
         <div class="tool-icon acad"><i class="fa-solid fa-border-all"></i></div>
         <h3>GEOGRID</h3>
+        <button class="show-btn"><i class="fa-solid fa-play"></i> Mostrar</button>
       </div>
       <div class="tool-card-body">
         <p>Genera cuadrículas automáticas con etiquetado de coordenadas. Ideal para planos topográficos y catastrales.</p>
@@ -250,6 +263,7 @@
       <div class="tool-card-header">
         <div class="tool-icon acad"><i class="fa-solid fa-ruler-combined"></i></div>
         <h3>GEOCOTAS</h3>
+        <button class="show-btn"><i class="fa-solid fa-play"></i> Mostrar</button>
       </div>
       <div class="tool-card-body">
         <p>Acota automáticamente distancias, áreas y niveles. Ahorra horas de trabajo manual en el dimensionamiento de planos.</p>
@@ -268,6 +282,7 @@
       <div class="tool-card-header">
         <div class="tool-icon"><i class="fa-solid fa-draw-polygon"></i></div>
         <h3>GEOLOTES</h3>
+        <button class="show-btn"><i class="fa-solid fa-play"></i> Mostrar</button>
       </div>
       <div class="tool-card-body">
         <p>Divide terrenos en lotes con numeración automática, cálculo de áreas y generación de cuadro de áreas.</p>
@@ -286,6 +301,7 @@
       <div class="tool-card-header">
         <div class="tool-icon"><i class="fa-solid fa-location-dot"></i></div>
         <h3>GEOVERTEX</h3>
+        <button class="show-btn"><i class="fa-solid fa-play"></i> Mostrar</button>
       </div>
       <div class="tool-card-body">
         <p>Inserta vértices y mojones con simbología personalizada. Genera tabla de coordenadas de vértices automáticamente.</p>
@@ -304,6 +320,7 @@
       <div class="tool-card-header premium">
         <div class="tool-icon"><i class="fa-solid fa-crown"></i></div>
         <h3>Pack Premium <span style="font-size:11px;background:#f4a52a;color:#fff;padding:2px 10px;border-radius:20px;font-weight:700;vertical-align:middle;margin-left:6px;">+ popular</span></h3>
+        <button class="show-btn"><i class="fa-solid fa-play"></i> Mostrar</button>
       </div>
       <div class="tool-card-body">
         <p>Todas las herramientas en un solo paquete. Incluye GEOCOORD, GEOGRID, GEOCOTAS, GEOLOTES y GEOVERTEX con descuento.</p>
