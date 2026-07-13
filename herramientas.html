@@ -199,6 +199,26 @@
   }
   .footer-bottom a{margin-left:20px;color:#8ea0b4;}
 
+  /* Modal */
+  .gif-modal{
+    display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.9);z-index:10000;
+    align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .gif-modal.active{display:flex;}
+  .gif-modal img{
+    max-width:90vw;max-height:90vh;
+    border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  .gif-modal-close{
+    position:absolute;top:20px;right:30px;
+    color:#fff;font-size:36px;cursor:pointer;
+    background:none;border:none;
+    transition:color 0.2s;
+  }
+  .gif-modal-close:hover{color:var(--green);}
+
   @media(max-width:768px){
     .topbar{height:14px;}
     .navbar{padding:12px 16px;}
@@ -258,7 +278,7 @@
       <div class="tool-card-header">
         <div class="tool-icon"><i class="fa-solid fa-table"></i></div>
         <h3>GEOCOORD</h3>
-        <button class="show-btn"><i class="fa-solid fa-play"></i> Demo</button>
+        <button class="show-btn" data-gif="GEOCOOR.gif"><i class="fa-solid fa-play"></i> Demo</button>
       </div>
       <div class="tool-card-body">
         <p><strong>Genera tu cuadro de coordenadas UTM en minutos, no en horas.</strong> GEOCOORD es una herramienta para AutoCAD que automatiza la parte más tediosa de cualquier levantamiento: identificar, numerar y tabular las coordenadas de un polígono.</p>
@@ -272,7 +292,7 @@
       <div class="tool-card-header">
         <div class="tool-icon acad"><i class="fa-solid fa-border-all"></i></div>
         <h3>GEOGRID</h3>
-        <button class="show-btn"><i class="fa-solid fa-play"></i> Demo</button>
+        <button class="show-btn" data-gif="GEOGRID.gif"><i class="fa-solid fa-play"></i> Demo</button>
       </div>
       <div class="tool-card-body">
         <p><strong>La cuadrícula de coordenadas que le da estándar profesional a tu plano.</strong> GEOGRID dibuja automáticamente la grilla de coordenadas Norte/Este sobre tu polígono, tal como se exige en planos catastrales y de georreferenciación.</p>
@@ -286,7 +306,7 @@
       <div class="tool-card-header">
         <div class="tool-icon acad"><i class="fa-solid fa-ruler-combined"></i></div>
         <h3>GEOCOTAS</h3>
-        <button class="show-btn"><i class="fa-solid fa-play"></i> Demo</button>
+        <button class="show-btn" data-gif="GEOCOTAS.gif"><i class="fa-solid fa-play"></i> Demo</button>
       </div>
       <div class="tool-card-body">
         <p><strong>Acota todos tus polígonos en un solo clic.</strong> GEOCOTAS automatiza el acotado de linderos y lotes, entregando un resultado limpio y uniforme sin tener que acotar lado por lado.</p>
@@ -300,7 +320,7 @@
       <div class="tool-card-header">
         <div class="tool-icon"><i class="fa-solid fa-draw-polygon"></i></div>
         <h3>GEOLOTES</h3>
-        <button class="show-btn"><i class="fa-solid fa-play"></i> Demo</button>
+        <button class="show-btn" data-gif="GEOLOTES.gif"><i class="fa-solid fa-play"></i> Demo</button>
       </div>
       <div class="tool-card-body">
         <p><strong>Etiqueta lotizaciones completas sin fatiga.</strong> GEOLOTES es la herramienta pensada para proyectos de urbanización: etiqueta cada lote con su número, manzana y área calculada, de forma masiva y uniforme.</p>
@@ -314,7 +334,7 @@
       <div class="tool-card-header">
         <div class="tool-icon"><i class="fa-solid fa-location-dot"></i></div>
         <h3>GEOVERTEX</h3>
-        <button class="show-btn"><i class="fa-solid fa-play"></i> Demo</button>
+        <button class="show-btn" data-gif="Geovertex.gif"><i class="fa-solid fa-play"></i> Demo</button>
       </div>
       <div class="tool-card-body">
         <p><strong>Corrige un vértice sin rehacer el polígono.</strong> GEOVERTEX resuelve un problema muy puntual pero muy común en campo: llega una medida corregida y no quieres borrar y volver a trazar todo el polígono para ajustarla.</p>
@@ -328,7 +348,6 @@
       <div class="tool-card-header premium">
         <div class="tool-icon"><i class="fa-solid fa-crown"></i></div>
         <h3>Pack Premium <span style="font-size:11px;background:#f4a52a;color:#fff;padding:2px 10px;border-radius:20px;font-weight:700;vertical-align:middle;margin-left:6px;position:relative;top:-6px;">+ popular</span></h3>
-        <button class="show-btn"><i class="fa-solid fa-play"></i> Demo</button>
       </div>
       <div class="tool-card-body">
         <p>Todas las herramientas en un solo paquete. Incluye GEOCOORD, GEOGRID, GEOCOTAS, GEOLOTES y GEOVERTEX con descuento.</p>
@@ -375,22 +394,60 @@
   </div>
 </footer>
 
+<!-- GIF Modal -->
+<div class="gif-modal" id="gif-modal">
+  <button class="gif-modal-close" id="gif-modal-close">&times;</button>
+  <img id="gif-modal-img" src="" alt="Demo">
+</div>
+
 <script>
 function toggleMenu(){var m=document.getElementById('mobile-menu');m.style.display=m.style.display==='flex'?'none':'flex';}
 function closeMenu(){document.getElementById('mobile-menu').style.display='none';}
+
+// GIF Modal
+var gifModal=document.getElementById('gif-modal');
+var gifModalImg=document.getElementById('gif-modal-img');
+var gifModalClose=document.getElementById('gif-modal-close');
+
+document.querySelectorAll('.tool-gif').forEach(function(gif){
+  gif.addEventListener('click',function(e){
+    e.stopPropagation();
+    gifModalImg.src=this.src;
+    gifModal.classList.add('active');
+  });
+});
+
+gifModal.addEventListener('click',function(){
+  gifModal.classList.remove('active');
+  gifModalImg.src='';
+});
+
+gifModalClose.addEventListener('click',function(e){
+  e.stopPropagation();
+  gifModal.classList.remove('active');
+  gifModalImg.src='';
+});
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&gifModal.classList.contains('active')){
+    gifModal.classList.remove('active');
+    gifModalImg.src='';
+  }
+});
+
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('hamburger-btn').addEventListener('click',toggleMenu);
   document.getElementById('mobile-close-btn').addEventListener('click',closeMenu);
-  var sb=document.querySelectorAll('.show-btn');
-  for(var i=0;i<sb.length;i++){(function(btn){
-    btn.addEventListener('click',function(){
-      var body=this.closest('.tool-card-body');
-      if(!body.querySelector('.tool-demo')){
-        var detail=document.createElement('div');detail.className='tool-demo';detail.style.cssText='margin-top:12px;padding:12px;background:#f7f9fb;border-radius:8px;font-size:13px;color:#5c6b7a;line-height:1.5;border:1px solid #e6e9ed;';
-        var txt=this.closest('.tool-card').querySelector('h3').textContent.trim();
-        detail.innerHTML='<strong>Demo de '+txt+'</strong><br>Video demostrativo disponible próximamente.';
-        body.insertBefore(detail,body.querySelector('.tool-btn'));}
-    });})(sb[i]);}
+
+  // Demo buttons → open GIF modal
+  document.querySelectorAll('.show-btn[data-gif]').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      var gifFile=this.getAttribute('data-gif');
+      gifModalImg.src=gifFile;
+      gifModal.classList.add('active');
+    });
+  });
 });
 </script>
 </body>
