@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoCAD Solutions - Herramientas AutoLISP y Cursos QGIS</title>
-  <meta name="description" content="GeoCAD Solutions: herramientas AutoLISP para AutoCAD y cursos prácticos de QGIS. Automatiza, optimiza y transforma tus proyectos de ingeniería y topografía.">
-  <meta name="keywords" content="AutoLISP, AutoCAD, QGIS, herramientas AutoCAD, cursos QGIS, topografía, ingeniería civil, planos, coordenadas UTM">
+  <title>GeoCAD Solutions - Herramientas AutoLISP para AutoCAD</title>
+  <meta name="description" content="Herramientas VLX para AutoCAD que numeran, acotan, dibujan cuadrículas y etiquetan lotes en segundos. Sin errores, sin repetir trabajo.">
+  <meta name="keywords" content="AutoLISP, VLX, herramientas AutoCAD, GEOCOORD, GEOGRID, GEOCOTAS, GEOLOTES, GEOVERTEX, topografía, planos catastrales, coordenadas UTM">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="GeoCAD Solutions - Herramientas AutoLISP y Cursos QGIS">
-  <meta property="og:description" content="Automatiza, optimiza y transforma tus proyectos de ingeniería y topografía con herramientas AutoLISP y cursos prácticos de QGIS.">
+  <meta property="og:title" content="GeoCAD Solutions - Herramientas AutoLISP para AutoCAD">
+  <meta property="og:description" content="Automatiza tus planos topográficos en segundos. Herramientas VLX probadas para AutoCAD 2015-2026.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://geocadsolutions.github.io/">
   <meta property="og:image" content="https://geocadsolutions.github.io/logo.png">
@@ -41,287 +41,176 @@
   ul{list-style:none;}
   img{max-width:100%;display:block;}
 
-  /* Top bar */
-  .topbar{
-    background:var(--navy-dark);
-    height:30px;
-  }
+  .topbar{background:var(--navy-dark);height:30px;}
 
-  /* Nav */
   .navbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 40px;
-    border-bottom:1px solid var(--border);
-    background:#fff;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 40px;border-bottom:1px solid var(--border);background:#fff;
   }
   .logo{display:flex;align-items:center;gap:12px;}
-  .logo-icon{
-    width:52px;height:auto;
-    display:flex;align-items:center;justify-content:center;
-  }
+  .logo-icon{width:52px;height:auto;display:flex;align-items:center;justify-content:center;}
   .logo-icon img{width:100%;height:auto;display:block;}
+  .logo-text{font-size:22px;font-weight:800;color:var(--navy-dark);}
+  .logo-text span{color:var(--green);}
+  .nav-links{display:flex;align-items:center;gap:34px;font-weight:500;font-size:15px;color:var(--text-dark);}
+  .nav-links a{padding-bottom:6px;}
+  .nav-links a.active{color:var(--green);border-bottom:2px solid var(--green);font-weight:600;}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;background:none;border:none;}
   .hamburger span{width:24px;height:3px;background:var(--navy-dark);border-radius:2px;transition:0.3s;}
   .mobile-menu{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,31,58,0.97);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:30px;}
   .mobile-menu a{color:#fff;font-size:20px;font-weight:600;text-decoration:none;}
   .mobile-menu a:hover{color:var(--green);}
   .mobile-close{position:absolute;top:20px;right:25px;color:#fff;font-size:28px;cursor:pointer;background:none;border:none;}
-  .nav-links a[target="_blank"]::after{content:"\f08e";font-family:"Font Awesome 6 Free";font-weight:900;font-size:10px;margin-left:5px;opacity:0.6;}
-  .logo-text{font-size:22px;font-weight:800;color:var(--navy-dark);}
-  .logo-text span{color:var(--green);}
-  .nav-links{display:flex;align-items:center;gap:34px;font-weight:500;font-size:15px;color:var(--text-dark);}
-  .nav-links a{padding-bottom:6px;}
-  .nav-links a.active{color:var(--green);border-bottom:2px solid var(--green);font-weight:600;}
-  .nav-links .caret{font-size:11px;margin-left:4px;}
-  .cart{position:relative;color:var(--navy-dark);font-size:18px;}
-  .cart .badge{
-    position:absolute;top:-8px;right:-10px;
-    background:var(--green);color:#fff;
-    font-size:10px;width:16px;height:16px;
-    border-radius:50%;display:flex;align-items:center;justify-content:center;
-  }
 
-  /* Hero */
   .hero{
-    position:relative;
-    overflow:hidden;
-    background:#fbfbfa;
-    padding:70px 40px 60px;
+    background:linear-gradient(160deg,#0a1f3a 0%,#0e2a4a 55%,#153a5e 100%);
+    color:#fff;
+    padding:80px 40px 60px;
+    text-align:center;
   }
-  .hero-diag{
-    position:absolute;
-    top:0;right:0;
-    width:55%;
-    height:100%;
-    background:linear-gradient(135deg,#4caf50,#2e7d32);
-    clip-path:polygon(35% 0, 100% 0, 100% 100%, 5% 100%);
-    z-index:0;
-    opacity:0.95;
+  .hero h1{
+    font-size:42px;font-weight:800;line-height:1.2;
+    max-width:900px;margin:0 auto 18px;
   }
-  .hero-inner{
-    position:relative;z-index:2;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-    align-items:center;
-    max-width:1440px;
-    margin:0 auto;
+  .hero h1 .accent{color:#5cb85c;}
+  .hero p.sub{
+    font-size:17px;color:#b0c8dd;
+    max-width:640px;margin:0 auto 34px;line-height:1.6;
   }
-  .hero-text h1{
-    font-size:44px;
-    font-weight:800;
-    line-height:1.15;
-    color:var(--navy-dark);
-    margin-bottom:20px;
+  .hero-video{
+    max-width:820px;margin:0 auto 36px;
+    border-radius:14px;overflow:hidden;
+    box-shadow:0 25px 50px rgba(0,0,0,0.45);
+    background:#000;
   }
-  .hero-text h1 .accent{color:var(--green);}
-  .hero-text p{
-    font-size:16px;
-    color:var(--text-gray);
-    max-width:480px;
-    margin-bottom:28px;
-    line-height:1.6;
-  }
-  .hero-btns{display:flex;gap:14px;}
+  .hero-video video{width:100%;display:block;}
+  .hero .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
   .btn{
     display:inline-flex;align-items:center;gap:10px;
-    padding:13px 22px;border-radius:6px;
-    font-weight:600;font-size:15px;
-    border:none;cursor:pointer;
+    padding:16px 34px;border-radius:8px;
+    font-weight:700;font-size:17px;border:none;cursor:pointer;
   }
-  .btn-primary{background:var(--navy-dark);color:#fff;}
-  .btn-outline{background:#fff;color:var(--green);border:1.5px solid var(--green);}
+  .btn-green{background:#4caf50;color:#fff;box-shadow:0 8px 20px rgba(76,175,80,0.35);}
+  .btn-green:hover{background:var(--green-dark);}
+  .btn-ghost{background:transparent;color:#fff;border:1.5px solid #3a5b82;}
+  .btn-ghost:hover{border-color:#5cb85c;color:#5cb85c;}
 
-  .hero-visual{
-    position:relative;
-    min-height:400px;
+  .steps{
+    max-width:1100px;margin:0 auto;
+    padding:60px 40px;
   }
-  .mockup-wrap{position:relative;width:100%;height:420px;}
-  .laptop-photo{
-    position:absolute;
-    filter:drop-shadow(0 25px 30px rgba(0,0,0,0.25));
-  }
-  .laptop-photo-front{
-    left:2%;bottom:0;width:62%;z-index:2;
-  }
-  .laptop-photo-back{
-    right:0;top:6%;width:58%;z-index:1;
-    opacity:0.96;
-  }
-  .qgis-badge{
-    position:absolute;right:6%;top:0;width:64px;height:64px;
-    background:#fff;border-radius:14px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.15);
+  .steps h2{font-size:28px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:40px;}
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .step{text-align:center;padding:24px;}
+  .step-num{
+    width:52px;height:52px;border-radius:50%;
+    background:var(--green);color:#fff;font-size:22px;font-weight:800;
     display:flex;align-items:center;justify-content:center;
-    z-index:3;
+    margin:0 auto 16px;
   }
-  .qgis-badge i{color:var(--green);font-size:26px;}
+  .step h4{font-size:16px;font-weight:700;color:var(--navy-dark);margin-bottom:8px;}
+  .step p{font-size:14px;color:var(--text-gray);line-height:1.6;}
+  .step code{
+    background:var(--bg-light);border:1px solid var(--border);
+    padding:2px 8px;border-radius:5px;
+    font-family:Consolas,monospace;font-size:13px;color:#c8102e;
+  }
 
-  .autocad-badge{
-    position:absolute;left:0;bottom:8%;width:60px;height:60px;
-    background:#c8102e;border-radius:10px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.2);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    color:#fff;font-weight:800;
-    z-index:3;
-  }
-  .autocad-badge .a{font-size:22px;line-height:1;}
-  .autocad-badge .cad{font-size:8px;letter-spacing:1px;}
-
-  /* Features row */
-  .features{
-    max-width:1440px;margin:0 auto;
-    padding:50px 40px 40px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:30px;
-  }
-  .feature{display:flex;gap:14px;align-items:flex-start;}
-  .feature .ficon{
-    width:44px;height:44px;border-radius:8px;
+  .tools{
     background:var(--bg-light);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding:60px 40px;
+  }
+  .tools h2{font-size:28px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:10px;}
+  .tools > p.note{text-align:center;color:var(--text-gray);font-size:13px;margin-bottom:40px;}
+  .tools-grid{
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px;
+  }
+  .tool-card{
+    border-radius:12px;border:1px solid var(--border);background:#fff;
+    overflow:hidden;transition:box-shadow 0.2s,transform 0.2s;
+  }
+  .tool-card:hover{box-shadow:0 12px 30px rgba(14,42,74,0.10);transform:translateY(-3px);}
+  .tool-card-header{
+    background:linear-gradient(135deg,#eef7ea,#e3f2e1);
+    padding:24px;display:flex;align-items:center;gap:16px;position:relative;
+  }
+  .tool-card-header.premium{background:linear-gradient(135deg,#fef6e0,#fdecc8);}
+  .tool-icon{
+    width:52px;height:52px;border-radius:10px;background:#fff;
     display:flex;align-items:center;justify-content:center;
-    color:var(--navy-dark);font-size:18px;flex-shrink:0;
+    font-size:22px;color:var(--green);flex-shrink:0;box-shadow:0 4px 10px rgba(0,0,0,0.05);
   }
-  .feature h4{font-size:14px;font-weight:700;letter-spacing:0.5px;margin-bottom:4px;color:var(--navy-dark);}
-  .feature p{font-size:13px;color:var(--text-gray);line-height:1.5;}
-
-  /* Cards section */
-  .cards{
-    max-width:1440px;margin:0 auto;
-    padding:20px 40px 60px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px;
+  .tool-icon.acad{color:#c8102e;}
+  .tool-card-header.premium .tool-icon{color:#c8900a;}
+  .tool-card-header h3{font-size:18px;font-weight:700;color:var(--navy-dark);}
+  .show-btn{
+    position:absolute;bottom:10px;right:12px;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 14px;border:1px solid var(--border);border-radius:6px;
+    background:#fff;color:var(--text-gray);font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;
   }
-  .card{
-    border-radius:12px;
-    padding:36px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-    align-items:center;
+  .show-btn:hover{color:var(--navy-dark);border-color:var(--navy-dark);}
+  .tool-card-body{padding:20px 24px 24px;}
+  .tool-card-body p{font-size:14px;color:var(--text-gray);line-height:1.6;margin-bottom:16px;}
+  .tool-price{font-size:22px;font-weight:800;color:var(--navy-dark);margin-bottom:16px;}
+  .tool-price span{font-size:14px;font-weight:400;color:var(--text-gray);}
+  .tool-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;padding:13px 20px;border:none;border-radius:8px;
+    font-weight:600;font-size:14px;cursor:pointer;background:var(--navy-dark);color:#fff;transition:background 0.2s;
   }
-  .card.green{background:linear-gradient(135deg,#eef7ea,#e3f2e1);}
-  .card.blue{background:linear-gradient(135deg,#eaf1fb,#e6eefb);}
-  .card-icon{
-    width:60px;height:60px;border-radius:12px;
-    background:#fff;display:flex;align-items:center;justify-content:center;
-    font-size:26px;margin-bottom:16px;
-    box-shadow:0 6px 14px rgba(0,0,0,0.06);
-  }
-  .card.green .card-icon i{color:var(--green);}
-  .card.blue .card-icon i{color:#c8102e;}
-  .card h3{font-size:22px;font-weight:800;color:var(--navy-dark);margin-bottom:10px;}
-  .card p{font-size:14px;color:var(--text-gray);line-height:1.6;margin-bottom:16px;}
-  .card ul{margin-bottom:20px;}
-  .card ul li{
-    display:flex;align-items:center;gap:8px;
-    font-size:14px;color:var(--text-dark);
-    margin-bottom:8px;
-  }
-  .card ul li i{color:var(--green);font-size:13px;}
-  .card.blue ul li i{color:#1a5fb4;}
-  .card-btn{
-    display:inline-block;
-    background:var(--green);color:#fff;
-    padding:11px 22px;border-radius:6px;
-    font-weight:600;font-size:14px;
-  }
-  .card.blue .card-btn{background:var(--navy-dark);}
-  .card-media{
-    border-radius:10px;overflow:hidden;
-    background:#fff;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    min-height:180px;
-    position:relative;
-  }
-  .card.green .card-media{background:linear-gradient(135deg,#dbe9ce,#c3dcae);}
-  .card.blue .card-media{background:#0d1520;}
-  .card.blue .card-media ul{position:absolute;top:14px;left:14px;right:14px;}
-  .card.blue .card-media ul li{
-    color:#cfe0ee;font-size:11px;margin-bottom:8px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .card.blue .card-media ul li i{color:#7ea9d8;font-size:11px;}
-  .close-x{position:absolute;top:10px;right:14px;color:#5c6b7a;font-size:12px;}
-
-  .card.soon{opacity:0.75;}
-  .soon-tag{
-    display:inline-block;
-    background:#f4a52a;color:#fff;
-    font-size:11px;font-weight:700;letter-spacing:0.3px;
-    padding:3px 10px;border-radius:20px;
-    vertical-align:middle;margin-left:8px;
-  }
-  .card-btn.disabled{
-    background:#aeb6bd !important;
-    color:#fff;
-    cursor:not-allowed;
-    pointer-events:none;
+  .tool-btn:hover{background:#153a5e;}
+  .tool-btn.green{background:var(--green);}
+  .tool-btn.green:hover{background:var(--green-dark);}
+  .tool-features{margin-bottom:20px;}
+  .tool-features li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dark);margin-bottom:6px;}
+  .tool-features li i{color:var(--green);font-size:12px;width:14px;}
+  .tool-card .crown-tag{
+    font-size:11px;background:#f4a52a;color:#fff;padding:2px 10px;border-radius:20px;font-weight:700;
+    vertical-align:middle;margin-left:6px;position:relative;top:-6px;
   }
 
-  /* Trust bar */
-  .trustbar{
-    background:var(--bg-light);
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-    padding:28px 40px;
-  }
-  .trustbar-inner{
-    max-width:1440px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(5,1fr);
-    gap:20px;
-  }
+  .trustbar{background:#fff;padding:28px 40px;}
+  .trustbar-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
   .trust-item{display:flex;align-items:center;gap:12px;}
   .trust-item i{font-size:20px;color:var(--navy-dark);}
   .trust-item span{font-size:13px;font-weight:600;color:var(--text-dark);line-height:1.3;}
 
-  /* Footer */
   footer{background:var(--navy-dark);color:#c6d3e0;padding:56px 40px 0;}
-  .footer-inner{
-    max-width:1440px;margin:0 auto;
-    display:flex;justify-content:space-between;align-items:flex-start;
-    gap:40px;padding-bottom:40px;
-  }
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;padding-bottom:40px;}
   .footer-brand{flex-shrink:0;}
   .footer-brand .logo-text{color:#fff;}
-  .footer-brand .logo-icon{
-    background:#fff;border-radius:8px;padding:5px;
-  }
   .footer-brand p{margin-top:14px;font-size:14px;color:#9fb0c2;}
   footer h5{color:#fff;font-size:15px;font-weight:700;margin-bottom:18px;}
   footer ul li{margin-bottom:12px;font-size:14px;}
   footer ul li a:hover{color:#fff;}
   .newsletter{display:block;}
-  .newsletter-form{display:flex;gap:0;}
-  .newsletter-form input{
-    flex:1;padding:12px 14px;border:none;border-radius:6px 0 0 6px;
-    font-size:14px;
-  }
-  .newsletter-form button{
-    background:var(--green);color:#fff;border:none;
-    padding:12px 20px;border-radius:0 6px 6px 0;
-    font-weight:600;font-size:14px;cursor:pointer;
-  }
-  .footer-bottom{
-    border-top:1px solid #223c58;
-    padding:20px 40px;
-    display:flex;justify-content:space-between;
-    max-width:1440px;margin:0 auto;
-    font-size:13px;color:#8ea0b4;
-  }
+  .footer-bottom{border-top:1px solid #223c58;padding:20px 40px;display:flex;justify-content:space-between;max-width:1200px;margin:0 auto;font-size:13px;color:#8ea0b4;}
   .footer-bottom a{margin-left:20px;color:#8ea0b4;}
 
+  .gif-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;align-items:center;justify-content:center;cursor:pointer;}
+  .gif-modal.active{display:flex;}
+  .gif-modal img{max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  .gif-modal-close{position:absolute;top:20px;right:30px;color:#fff;font-size:36px;cursor:pointer;background:none;border:none;}
+  .gif-modal-close:hover{color:var(--green);}
+
   @media(max-width:1024px){
-    .topbar{height:14px;}
-    .hero-inner,.features,.cards,.trustbar-inner{grid-template-columns:1fr;}
-    .footer-inner{flex-direction:column;}
-    .hero-diag{display:none;}
-    .card{grid-template-columns:1fr;}
+    .steps-grid,.trustbar-inner{grid-template-columns:1fr;}
     .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .footer-inner{flex-direction:column;}
+    .tools-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:768px){
+    .topbar{height:14px;}
+    .navbar{padding:12px 16px;}
+    .hero{padding:50px 20px 40px;}
+    .hero h1{font-size:28px;}
+    .steps{padding:40px 20px;}
+    .tools{padding:40px 20px;}
+    .trustbar{padding:24px 20px;}
   }
 </style>
 </head>
@@ -349,90 +238,133 @@
 </div>
 
 <section class="hero">
-  <div class="hero-diag"></div>
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1>Soluciones inteligentes<br>para tus <span class="accent">proyectos</span></h1>
-      <p>Herramientas AutoLISP para automatizar, optimizar y transformar tu trabajo.</p>
-      <div class="hero-btns">
-        <a href="herramientas.html" class="btn btn-primary"><i class="fa-solid fa-store"></i> Ir a la tienda</a>
-      </div>
+  <h1>¿Cansado de numerar, acotar y dibujar a mano<br>cada plano en AutoCAD?</h1>
+  <p class="sub">Las herramientas de GeoCAD Solutions hacen ese trabajo tedioso <strong style="color:#fff;">en segundos</strong>. Sin errores, sin repetir, sin rehacer. Míralo tú mismo:</p>
+  <div class="hero-video">
+    <video controls preload="metadata" poster="Gifs/para targeta - copia.png">
+      <source src="Gifs/REEL_comprimido.mp4" type="video/mp4">
+      Tu navegador no soporta video.
+    </video>
+  </div>
+  <div class="cta-row">
+    <a href="herramientas.html" class="btn btn-green"><i class="fa-solid fa-bolt"></i> Ver herramientas y precios</a>
+    <a href="#como-funciona" class="btn btn-ghost"><i class="fa-solid fa-circle-info"></i> ¿Cómo funciona?</a>
+  </div>
+</section>
+
+<section class="steps" id="como-funciona">
+  <h2>¿Cómo funciona?</h2>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Descarga el archivo .VLX</h4>
+      <p>Recibes la herramienta al instante con tu compra y un video tutorial de uso.</p>
     </div>
-    <div class="hero-visual">
-      <div class="mockup-wrap">
-        <div class="autocad-badge"><span class="a">A</span><span class="cad">CAD</span></div>
-        <img class="laptop-photo laptop-photo-front" src="autocad-laptop.webp" alt="Laptop con AutoCAD">
-        <img class="laptop-photo laptop-photo-back" alt="Laptop con QGIS" src="qgis-laptop.webp">
-        <div class="qgis-badge"><i class="fa-solid fa-globe"></i></div>
-      </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Cárgala en AutoCAD</h4>
+      <p>Escribe <code>APPLOAD</code> y selecciona el archivo. Una vez, y queda lista.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Ejecuta el comando</h4>
+      <p>Escribe el comando de la herramienta, selecciona tu polígono y listo.</p>
     </div>
   </div>
 </section>
 
-<section class="features">
-  <div class="feature">
-    <div class="ficon"><i class="fa-solid fa-crosshairs"></i></div>
-    <div>
-      <h4>AUTOMATIZA</h4>
-      <p>Ahorra tiempo con herramientas LISP</p>
+<section class="tools" id="herramientas">
+  <h2>Herramientas VLX para AutoCAD 2015-2026</h2>
+  <p class="note">* Precios con IVA 15% incluido · Descarga inmediata</p>
+  <div class="tools-grid">
+    <!-- GEOCOORD -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon"><i class="fa-solid fa-table"></i></div>
+        <h3>GEOCOORD</h3>
+        <button class="show-btn" data-gif="Gifs/GEOCOOR.gif"><i class="fa-solid fa-play"></i> Ver Demo</button>
+      </div>
+      <div class="tool-card-body">
+        <p><strong>Tu cuadro de coordenadas UTM en minutos, no en horas.</strong> Identifica, numera y tabula las coordenadas de tu polígono automáticamente.</p>
+        <div class="tool-price">$19.90 <span>USD</span></div>
+        <a href="https://payhip.com/b/915wt" class="tool-btn" target="_blank" rel="noopener"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+      </div>
     </div>
-  </div>
-  <div class="feature">
-    <div class="ficon"><i class="fa-solid fa-gear"></i></div>
-    <div>
-      <h4>OPTIMIZA</h4>
-      <p>Mejora tu flujo de trabajo en CAD y GIS</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="ficon"><i class="fa-solid fa-layer-group"></i></div>
-    <div>
-      <h4>ANALIZA</h4>
-      <p>Trabaja mejores datos en QGIS</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="ficon"><i class="fa-regular fa-lightbulb"></i></div>
-    <div>
-      <h4>APRENDE</h4>
-      <p>Cursos claros y prácticos</p>
-    </div>
-  </div>
-</section>
 
-<section class="cards">
-  <div class="card blue">
-    <div>
-      <div class="card-icon"><span style="color:#c8102e;font-weight:800;">A</span></div>
-      <h3>Herramientas AutoLISP para AutoCAD</h3>
-      <p>Herramientas LISP desarrolladas para automatizar tareas repetitivas y aumentar tu productividad en AutoCAD.</p>
-      <ul>
-        <li><i class="fa-solid fa-circle-check"></i> Comandos eficientes</li>
-        <li><i class="fa-solid fa-circle-check"></i> Interfaz amigable</li>
-        <li><i class="fa-solid fa-circle-check"></i> Instalación sencilla</li>
-        <li><i class="fa-solid fa-circle-check"></i> Compatibles con múltiples versiones</li>
-      </ul>
-      <a href="herramientas.html" class="card-btn">Ir a la tienda</a>
+    <!-- GEOGRID -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon acad"><i class="fa-solid fa-border-all"></i></div>
+        <h3>GEOGRID</h3>
+        <button class="show-btn" data-gif="Gifs/GEOGRID.gif"><i class="fa-solid fa-play"></i> Ver Demo</button>
+      </div>
+      <div class="tool-card-body">
+        <p><strong>La cuadrícula de coordenadas con estándar profesional.</strong> Dibuja la grilla Norte/Este sobre tu polígono tal como exigen los planos catastrales.</p>
+        <div class="tool-price">$12.90 <span>USD</span></div>
+        <a href="https://payhip.com/b/UYnDA" class="tool-btn" target="_blank" rel="noopener"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+      </div>
     </div>
-    <div class="card-media" style="background:#fff;display:flex;align-items:center;justify-content:center;padding:10px;">
-      <img src="plano-muestra.webp" alt="Plano topográfico de muestra generado con herramientas AutoLISP de GeoCAD Solutions" style="width:100%;height:100%;object-fit:contain;border-radius:6px;">
-    </div>
-  </div>
 
-  <div class="card green soon">
-    <div>
-      <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
-      <h3>Cursos de QGIS Básico <span class="soon-tag">Próximamente</span></h3>
-      <p>Aprende QGIS desde cero. Manejo de datos espaciales, edición, simbología, análisis y mapas profesionales.</p>
-      <ul>
-        <li><i class="fa-solid fa-circle-check"></i> Lecciones paso a paso</li>
-        <li><i class="fa-solid fa-circle-check"></i> Ejemplos prácticos</li>
-        <li><i class="fa-solid fa-circle-check"></i> Material descargable</li>
-        <li><i class="fa-solid fa-circle-check"></i> Certificado de finalización</li>
-      </ul>
-      <a href="#" class="card-btn disabled">Próximamente</a>
+    <!-- GEOCOTAS -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon acad"><i class="fa-solid fa-ruler-combined"></i></div>
+        <h3>GEOCOTAS</h3>
+        <button class="show-btn" data-gif="Gifs/GEOCOTAS.gif"><i class="fa-solid fa-play"></i> Ver Demo</button>
+      </div>
+      <div class="tool-card-body">
+        <p><strong>Acota todos tus polígonos en un solo clic.</strong> Linderos y lotes acotados de forma limpia y uniforme, sin hacerlo lado por lado.</p>
+        <div class="tool-price">$12.90 <span>USD</span></div>
+        <a href="https://payhip.com/b/oMsgk" class="tool-btn" target="_blank" rel="noopener"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+      </div>
     </div>
-    <div class="card-media"></div>
+
+    <!-- GEOLOTES -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon"><i class="fa-solid fa-draw-polygon"></i></div>
+        <h3>GEOLOTES</h3>
+        <button class="show-btn" data-gif="Gifs/GEOLOTES.gif"><i class="fa-solid fa-play"></i> Ver Demo</button>
+      </div>
+      <div class="tool-card-body">
+        <p><strong>Etiqueta lotizaciones completas sin fatiga.</strong> Cada lote con su número, manzana y área calculada, de forma masiva y uniforme.</p>
+        <div class="tool-price">$12.90 <span>USD</span></div>
+        <a href="https://payhip.com/b/6wYym" class="tool-btn" target="_blank" rel="noopener"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+      </div>
+    </div>
+
+    <!-- GEOVERTEX -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <h3>GEOVERTEX</h3>
+        <button class="show-btn" data-gif="Gifs/Geovertex.gif"><i class="fa-solid fa-play"></i> Ver Demo</button>
+      </div>
+      <div class="tool-card-body">
+        <p><strong>Corrige un vértice sin rehacer el polígono.</strong> Llega una medida corregida de campo y ajustas un solo punto, no todo el dibujo.</p>
+        <div class="tool-price">$5 <span>USD</span></div>
+        <a href="https://payhip.com/b/M4QlD" class="tool-btn" target="_blank" rel="noopener"><i class="fa-solid fa-cart-shopping"></i> Comprar</a>
+      </div>
+    </div>
+
+    <!-- Pack Premium -->
+    <div class="tool-card">
+      <div class="tool-card-header premium">
+        <div class="tool-icon"><i class="fa-solid fa-crown"></i></div>
+        <h3>Pack Premium <span class="crown-tag">+ popular</span></h3>
+      </div>
+      <div class="tool-card-body">
+        <p>Todas las herramientas en un solo paquete: GEOCOORD, GEOGRID, GEOCOTAS, GEOLOTES y GEOVERTEX con descuento.</p>
+        <div class="tool-price">$39 <span>USD</span> <span style="font-size:13px;color:#c8102e;text-decoration:line-through;margin-left:8px;">$55</span></div>
+        <ul class="tool-features">
+          <li><i class="fa-solid fa-check"></i> Las 5 herramientas completas</li>
+          <li><i class="fa-solid fa-check"></i> Soporte prioritario</li>
+          <li><i class="fa-solid fa-check"></i> Actualizaciones gratuitas</li>
+          <li><i class="fa-solid fa-check"></i> Video tutorial de cada una</li>
+        </ul>
+        <a href="https://payhip.com/b/WqHwZ" class="tool-btn green" target="_blank" rel="noopener"><i class="fa-solid fa-crown"></i> Comprar Pack</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -450,7 +382,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">
-    <div class="logo-icon"><img alt="GeoCAD Solutions" src="logo-icon.webp"></div>
+        <div class="logo-icon"><img alt="GeoCAD Solutions" src="logo-icon.webp"></div>
         <div class="logo-text">GeoCAD Solutions</div>
       </div>
       <p style="font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;">Síguenos en redes sociales</p>
@@ -475,12 +407,26 @@
   </div>
 </footer>
 
+<div class="gif-modal" id="gif-modal">
+  <button class="gif-modal-close" id="gif-modal-close">&times;</button>
+  <img id="gif-modal-img" src="" alt="Demo">
+</div>
+
 <script>
 function toggleMenu(){var m=document.getElementById('mobile-menu');m.style.display=m.style.display==='flex'?'none':'flex';}
 function closeMenu(){document.getElementById('mobile-menu').style.display='none';}
+var gifModal=document.getElementById('gif-modal');
+var gifModalImg=document.getElementById('gif-modal-img');
+var gifModalClose=document.getElementById('gif-modal-close');
+gifModal.addEventListener('click',function(){gifModal.classList.remove('active');gifModalImg.src='';});
+gifModalClose.addEventListener('click',function(e){e.stopPropagation();gifModal.classList.remove('active');gifModalImg.src='';});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&gifModal.classList.contains('active')){gifModal.classList.remove('active');gifModalImg.src='';}});
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('hamburger-btn').addEventListener('click',toggleMenu);
   document.getElementById('mobile-close-btn').addEventListener('click',closeMenu);
+  document.querySelectorAll('.show-btn[data-gif]').forEach(function(btn){
+    btn.addEventListener('click',function(e){e.preventDefault();gifModalImg.src=this.getAttribute('data-gif');gifModal.classList.add('active');});
+  });
 });
 </script>
 </body>
