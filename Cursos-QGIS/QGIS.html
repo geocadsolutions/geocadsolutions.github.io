@@ -102,7 +102,35 @@
     @media(min-width:769px){
       .mobile-cta{display:none}
     }
-  </style>
+  .qp-head{display:flex;flex-direction:column;gap:20px;margin-bottom:32px}
+@media(min-width:900px){.qp-head{flex-direction:row;align-items:center;justify-content:space-between}}
+.qp-badge-new{display:inline-flex;align-items:center;background:#0a1e3c;color:#fff;border-radius:9999px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.qp-title{font-size:28px;font-weight:900;letter-spacing:-.02em;color:#0a1e3c;line-height:1;margin-top:12px}
+.qp-sub{color:#64748b;font-size:14px;line-height:1.5;max-width:560px;margin-top:12px}
+.qp-btn-top{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 24px;border-radius:9999px;border:1px solid #e2e8f0;font-weight:600;font-size:14px;color:#0a1e3c;text-decoration:none;width:fit-content;transition:background .2s}
+.qp-btn-top:hover{background:#f8fafc}
+.qp-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:768px){.qp-grid{grid-template-columns:repeat(2,1fr)}}
+.qp-card{display:block;border:1px solid #e2e8f0;border-radius:20px;padding:28px;background:linear-gradient(to bottom,#fff,#f8fafc);text-decoration:none;transition:border-color .2s,box-shadow .2s}
+.qp-card:hover{border-color:#0a1e3c;box-shadow:0 12px 24px -6px rgba(10,30,60,.15)}
+.qp-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.qp-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0}
+.qp-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:9999px;white-space:nowrap}
+.qp-name{font-weight:900;font-size:20px;letter-spacing:-.02em;color:#0a1e3c;margin-top:20px}
+.qp-desc{font-size:14px;color:#475569;line-height:1.55;margin-top:8px}
+.qp-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.qp-chip{font-size:11px;font-weight:500;background:#fff;border:1px solid #e2e8f0;padding:4px 10px;border-radius:9999px;color:#475569}
+.qp-go{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#0a1e3c;margin-top:24px;transition:gap .2s}
+.qp-card:hover .qp-go{gap:12px}
+.qp-note{margin-top:24px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0;padding:16px;display:flex;flex-direction:column;gap:12px;justify-content:space-between}
+@media(min-width:768px){.qp-note{flex-direction:row;align-items:center}}
+.qp-note-txt{font-size:13px;color:#475569;line-height:1.5}
+.qp-note-btns{display:flex;gap:8px;flex-shrink:0}
+.qp-mini{height:32px;padding:0 16px;border-radius:9999px;font-size:12px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.qp-mini-dark{background:#0a1e3c;color:#fff;font-weight:700}
+.qp-mini-light{border:1px solid #e2e8f0;background:#fff;color:#0a1e3c;font-weight:600}
+.tt{background:#000;color:#fff}
+</style>
 </head>
 <body>
 
@@ -115,6 +143,7 @@
     <nav class="desktop">
       <a href="https://geocadsolutions.github.io/">Inicio</a>
       <a href="#temario">Temario</a>
+      <a href="#plugins">Plugins QGIS</a>
       <a href="#precios">Precios</a>
       <a href="#proximos">Próximos cursos</a>
       <a href="#precios" class="btn btn-dark" style="padding:8px 20px;font-size:13px;">Quiero el curso</a>
@@ -163,6 +192,48 @@
         <div class="icon-box">🗺️</div>
         <h3>Profesionales del catastro</h3>
         <p>Digitaliza predios, administra atributos catastrales y genera reportes de áreas con precisión.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="plugins">
+  <div class="container">
+    <div class="qp-head">
+      <div>
+        <span class="qp-badge-new">Nuevo</span>
+        <h2 class="qp-title">Plugins QGIS &lt;-&gt; AutoCAD</h2>
+        <p class="qp-sub">Flujo bidireccional sin DXF. Copia entidades de AutoCAD a QGIS con atributos y viceversa, manteniendo coordenadas reales.</p>
+      </div>
+      <a class="qp-btn-top" href="mailto:geocad.solutions@outlook.com?subject=Quiero%20el%20Curso%20de%20Plugins%20QGIS%20AutoCAD">Ver curso de plugins &#8594;</a>
+    </div>
+    <div class="qp-grid">
+      <a class="qp-card" href="mailto:geocad.solutions@outlook.com?subject=Quiero%20el%20Curso%20PasteFromCAD">
+        <div class="qp-card-top">
+          <div class="qp-icon" style="background:#0a1e3c;">A&#8594;Q</div>
+          <div class="qp-tag" style="color:#16a34a;background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.25);">AUTOCAD &#8594; QGIS</div>
+        </div>
+        <div class="qp-name">PasteFromCAD</div>
+        <div class="qp-desc">Pega polil&iacute;neas, puntos y bloques de AutoCAD directamente en QGIS como capas editables con sistema de coordenadas y tabla de atributos.</div>
+        <div class="qp-chips"><span class="qp-chip">Conserva CRS</span><span class="qp-chip">Atributos autom&aacute;ticos</span><span class="qp-chip">Sin Shape intermedio</span></div>
+        <div class="qp-go">Ir al curso &#8594;</div>
+      </a>
+      <a class="qp-card" href="mailto:geocad.solutions@outlook.com?subject=Quiero%20el%20Curso%20CopyFromQgis">
+        <div class="qp-card-top">
+          <div class="qp-icon" style="background:#16a34a;">Q&#8594;A</div>
+          <div class="qp-tag" style="color:#0a1e3c;background:rgba(10,30,60,.08);border:1px solid rgba(10,30,60,.22);">QGIS &#8594; AUTOCAD</div>
+        </div>
+        <div class="qp-name">CopyFromQgis</div>
+        <div class="qp-desc">Exporta capas QGIS a AutoCAD manteniendo estilos, elevaciones y coordenadas UTM. Ideal para entregar planos a ingenier&iacute;a.</div>
+        <div class="qp-chips"><span class="qp-chip">WGS84 &#8596; UTM auto</span><span class="qp-chip">Capas &#8596; Layers</span><span class="qp-chip">Bloques con atributos</span></div>
+        <div class="qp-go">Ir al curso &#8594;</div>
+      </a>
+    </div>
+    <div class="qp-note">
+      <div class="qp-note-txt">&#9889; Flujo bidireccional disponible en <b style="color:#0a1e3c;">este curso</b>, con instalador y videotutorial incluidos.</div>
+      <div class="qp-note-btns">
+        <a class="qp-mini qp-mini-dark" href="#precios">Quiero el curso</a>
+        <a class="qp-mini qp-mini-light" href="#temario">Ver temario</a>
       </div>
     </div>
   </div>
@@ -343,6 +414,7 @@
       <p class="footer-social">Síguenos en redes sociales</p>
       <div class="social-btns">
         <a class="fb" href="https://www.facebook.com/profile.php?id=61590627765898" target="_blank" rel="noopener">f Facebook</a>
+        <a class="tt" href="https://www.tiktok.com/@geocadsolutions" target="_blank" rel="noopener">&#9834; TikTok</a>
       </div>
     </div>
     <div>
