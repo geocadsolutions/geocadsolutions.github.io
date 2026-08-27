@@ -326,7 +326,7 @@
         <div class="name">Topografía y Catastro</div>
         <div class="amount">$25 <small>USD</small></div>
         <p class="desc">6 clases grabadas HD + archivos + certificado + soporte.</p>
-        <a href="mailto:geocad.solutions@outlook.com?subject=Quiero%20el%20Curso%20QGIS%20B%C3%A1sico" class="btn btn-green">Inscribirme por correo</a>
+        <button type="button" class="btn btn-green" onclick="openForm()">Inscribirme</button>
       </div>
       <div class="price-card">
         <span class="soon">PRÓXIMAMENTE</span>
@@ -403,7 +403,7 @@
   <div class="container" style="position:relative;">
     <h2>¿Listo para dominar QGIS?</h2>
     <p>Únete al curso y entrega planos profesionales sin depender de nadie. Inscripción por correo, pago único de $25 USD.</p>
-    <a href="mailto:geocad.solutions@outlook.com?subject=Quiero%20el%20Curso%20QGIS%20B%C3%A1sico" class="btn btn-green">Inscribirme ahora</a>
+    <button type="button" class="btn btn-green" onclick="openForm()">Inscribirme ahora</button>
   </div>
 </section>
 
@@ -438,6 +438,113 @@
     <span><a href="#">Términos y condiciones</a><a href="#">Aviso de privacidad</a></span>
   </div>
 </footer>
+
+<!-- ================= FORMULARIO DE INSCRIPCION (MODAL) ================= -->
+<div id="inscModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:1000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;max-width:440px;width:100%;padding:36px;box-shadow:0 30px 60px rgba(0,0,0,.25);position:relative;">
+    <button type="button" onclick="closeForm()" style="position:absolute;top:14px;right:18px;background:none;border:none;font-size:28px;cursor:pointer;color:#94a3b8;line-height:1;">&times;</button>
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:15px;font-weight:800;color:#0a1e3c;">Curso QGIS Básico</div>
+      <div style="color:#64748b;font-size:14px;margin-top:4px;">Topografía y Catastro — $25 USD</div>
+      <div id="cupoTexto" style="margin-top:10px;font-size:13px;font-weight:700;color:#16a34a;background:#dcfce7;display:inline-block;padding:5px 14px;border-radius:9999px;">Cupos limitados</div>
+    </div>
+    <form id="inscForm">
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px;">Nombre completo</label>
+        <input type="text" name="name" required placeholder="Ej: María Pérez" style="width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;font-size:14px;">
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px;">Tu correo electrónico</label>
+        <input type="email" name="email" required placeholder="ejemplo@correo.com" style="width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;font-size:14px;">
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px;">Ciudad / País <span style="font-weight:400;color:#94a3b8;">(opcional)</span></label>
+        <input type="text" name="location" placeholder="Ej: La Troncal, Ecuador" style="width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;font-size:14px;">
+      </div>
+      <input type="checkbox" name="botcheck" style="display:none;">
+      <button type="submit" id="btnEnviar" style="width:100%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:9999px;font-size:16px;font-weight:800;cursor:pointer;">Inscribirme — $25 USD</button>
+      <p id="formMsg" style="text-align:center;font-size:13px;margin-top:12px;color:#16a34a;display:none;">✅ ¡Inscripción enviada! Te contactaremos por correo para el pago.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+// CONFIGURACION
+var ACCESS_KEY = 'c9b4b7dd-4e81-4216-8cd3-bbaa12da7c7d';
+var CUPO_MAX = 25;
+
+// --- Contador de cupos (Solo visible para ti con ?admin) ---
+function contarInscritos() {
+  try { return parseInt(localStorage.getItem('capacidadInscritos') || '0', 10); }
+  catch (e) { return 0; }
+}
+function sumarInscrito() {
+  try {
+    var n = contarInscritos() + 1;
+    localStorage.setItem('capacidadInscritos', String(n));
+    return n;
+  } catch (e) { return contarInscritos() + 1; }
+}
+
+function openForm() {
+  if (contarInscritos() >= CUPO_MAX) {
+    alert('Lo sentimos, el cupo de 25 personas para este curso está completo.');
+    return;
+  }
+  document.getElementById('cupoTexto').textContent = 'Quedan ' + (CUPO_MAX - contarInscritos()) + ' de ' + CUPO_MAX + ' cupos';
+  document.getElementById('inscModal').style.display = 'flex';
+}
+function closeForm() {
+  document.getElementById('inscModal').style.display = 'none';
+}
+
+document.getElementById('inscForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var form = this;
+  var btn = document.getElementById('btnEnviar');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  var formData = new FormData(form);
+  formData.append('access_key', ACCESS_KEY);
+  formData.append('subject', 'NUEVA INSCRIPCION - Curso QGIS Basico');
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: formData
+  })
+  .then(function (res) { return res.json(); })
+  .then(function (data) {
+    if (data.success) {
+      sumarInscrito();
+      document.getElementById('formMsg').style.display = 'block';
+      document.getElementById('formMsg').textContent = '✅ ¡Inscripción enviada! Te contactaremos por correo para el pago.';
+      form.reset();
+      btn.textContent = '¡Inscrito!';
+    } else {
+      alert('Hubo un problema al enviar. Intenta de nuevo.');
+      btn.disabled = false;
+      btn.textContent = 'Inscribirme — $25 USD';
+    }
+  })
+  .catch(function () {
+    alert('Error de conexión. Intenta de nuevo.');
+    btn.disabled = false;
+    btn.textContent = 'Inscribirme — $25 USD';
+  });
+});
+
+// Panel admin oculto: agrega ?admin a la URL para ver el contador
+(function () {
+  if (window.location.search.indexOf('admin') !== -1) {
+    var adminPanel = document.createElement('div');
+    adminPanel.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#0a1e3c;color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;z-index:2000;box-shadow:0 10px 30px rgba(0,0,0,.3);';
+    adminPanel.innerHTML = 'Inscritos: <b style="color:#16a34a;">' + contarInscritos() + '</b> / ' + CUPO_MAX +
+      ' &nbsp;<button onclick="var n=prompt(\'Ajustar numero de inscritos\',localStorage.getItem(\'capacidadInscritos\')||\'0\');if(n!==null){localStorage.setItem(\'capacidadInscritos\',n);location.reload();}" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;">Ajustar</button>';
+    document.body.appendChild(adminPanel);
+  }
+})();
+</script>
 
 </body>
 </html>
