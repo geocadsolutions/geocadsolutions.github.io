@@ -538,17 +538,20 @@ function closeForm() {
   document.getElementById('inscModal').style.display = 'none';
 }
 
-// Actualiza el contador visible al abrir la pagina (tiempo real)
-(function () {
-  actualizarCupoDesdeSupabase().then(function (n) {
+// Refresca el contador en pantalla leyendo el numero REAL desde Supabase
+function refrescarCupoEnPantalla() {
+  return actualizarCupoDesdeSupabase().then(function (n) {
+    localStorage.setItem('capacidadInscritos', String(n));
     var cupoEl = document.getElementById('cupoTexto');
     if (cupoEl) cupoEl.textContent = 'Quedan ' + (CUPO_MAX - n) + ' de ' + CUPO_MAX + ' cupos';
     var extra = document.querySelector('[data-cupo-extra]');
     if (extra) extra.textContent = 'Quedan ' + (CUPO_MAX - n) + ' de ' + CUPO_MAX + ' cupos';
-    // Guarda el conteo real local como referencia visual
-    localStorage.setItem('capacidadInscritos', String(n));
+    return n;
   });
-})();
+}
+
+// Actualiza el contador visible al abrir la pagina
+refrescarCupoEnPantalla().catch(function () {});
 
 document.getElementById('inscForm').addEventListener('submit', function (e) {
   e.preventDefault();
@@ -594,6 +597,30 @@ document.getElementById('inscForm').addEventListener('submit', function (e) {
     btn.textContent = 'Inscribirme — $25 USD';
   });
 });
+
+// Escucha en tiempo real los cambios en la tabla inscripciones (insert/delete)
+(function () {
+  // Carga el cliente Realtime de Supabase
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = function () {
+    try {
+      var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      var canal = sb
+        .channel('inscripciones-cambios')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'inscripciones' }, function () {
+          refrescarCupoEnPantalla().catch(function () {});
+        })
+        .subscribe();
+      // Guardamos referencias para no perder el canal
+      window._sbCanal = canal;
+    } catch (e) {
+      /* si falla el realtime, la pagina sigue funcionando con refresco normal */
+    }
+  };
+  s.onerror = function () { /* sin realtime, sigue el refresco al cargar */ };
+  document.head.appendChild(s);
+})();
 </script>
 
 </body>
