@@ -472,8 +472,10 @@
 // CONFIGURACION
 var ACCESS_KEY = 'c9b4b7dd-4e81-4216-8cd3-bbaa12da7c7d';
 var CUPO_MAX = 25;
+var SUPABASE_URL = 'https://gwlursfeghsksxacckwx.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_vJNCIt2lgo9pzJbvg0DGNw_DS2Tyutt';
 
-// --- Contador de cupos (Solo visible para ti con ?admin) ---
+// --- Contador de cupos (Compartido via Supabase - todos ven lo mismo) ---
 function contarInscritos() {
   try { return parseInt(localStorage.getItem('capacidadInscritos') || '0', 10); }
   catch (e) { return 0; }
@@ -486,17 +488,67 @@ function sumarInscrito() {
   } catch (e) { return contarInscritos() + 1; }
 }
 
+// Lee el conteo REAL desde Supabase (compartido)
+function actualizarCupoDesdeSupabase() {
+  return fetch(SUPABASE_URL + '/rest/v1/inscripciones?select=id', {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  })
+  .then(function (res) {
+    if (!res.ok) throw new Error('supabase');
+    return res.json();
+  })
+  .then(function (rows) {
+    var n = Array.isArray(rows) ? rows.length : 0;
+    return n;
+  })
+  .catch(function () {
+    return contarInscritos();
+  });
+}
+
+// Registra la inscripcion en Supabase (base compartida)
+function registrarInscripcionSupabase(nombre, email, ciudad) {
+  return fetch(SUPABASE_URL + '/rest/v1/inscripciones', {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ nombre: nombre, email: email, ciudad: ciudad })
+  })
+  .then(function (res) {
+    if (!res.ok) throw new Error('supabase-insert');
+    return true;
+  });
+}
+
 function openForm() {
-  if (contarInscritos() >= CUPO_MAX) {
-    alert('Lo sentimos, el cupo de 25 personas para este curso está completo.');
-    return;
-  }
-  document.getElementById('cupoTexto').textContent = 'Quedan ' + (CUPO_MAX - contarInscritos()) + ' de ' + CUPO_MAX + ' cupos';
-  document.getElementById('inscModal').style.display = 'flex';
+  actualizarCupoDesdeSupabase().then(function (n) {
+    if (n >= CUPO_MAX) {
+      alert('Lo sentimos, el cupo de ' + CUPO_MAX + ' personas para este curso está completo.');
+      return;
+    }
+    document.getElementById('cupoTexto').textContent = 'Quedan ' + (CUPO_MAX - n) + ' de ' + CUPO_MAX + ' cupos';
+    document.getElementById('inscModal').style.display = 'flex';
+  });
 }
 function closeForm() {
   document.getElementById('inscModal').style.display = 'none';
 }
+
+// Actualiza el contador visible al abrir la pagina (tiempo real)
+(function () {
+  actualizarCupoDesdeSupabase().then(function (n) {
+    var cupoEl = document.getElementById('cupoTexto');
+    if (cupoEl) cupoEl.textContent = 'Quedan ' + (CUPO_MAX - n) + ' de ' + CUPO_MAX + ' cupos';
+    var extra = document.querySelector('[data-cupo-extra]');
+    if (extra) extra.textContent = 'Quedan ' + (CUPO_MAX - n) + ' de ' + CUPO_MAX + ' cupos';
+    // Guarda el conteo real local como referencia visual
+    localStorage.setItem('capacidadInscritos', String(n));
+  });
+})();
 
 document.getElementById('inscForm').addEventListener('submit', function (e) {
   e.preventDefault();
@@ -505,10 +557,15 @@ document.getElementById('inscForm').addEventListener('submit', function (e) {
   btn.disabled = true;
   btn.textContent = 'Enviando...';
 
+  var nombre = (form.querySelector('[name="name"]') || {}).value || '';
+  var email = (form.querySelector('[name="email"]') || {}).value || '';
+  var ciudad = (form.querySelector('[name="location"]') || {}).value || '';
+
   var formData = new FormData(form);
   formData.append('access_key', ACCESS_KEY);
   formData.append('subject', 'NUEVA INSCRIPCION - Curso QGIS Basico');
 
+  // 1) Envia a Web3Forms (correo)
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     body: formData
@@ -516,19 +573,23 @@ document.getElementById('inscForm').addEventListener('submit', function (e) {
   .then(function (res) { return res.json(); })
   .then(function (data) {
     if (data.success) {
-      sumarInscrito();
-      document.getElementById('formMsg').style.display = 'block';
-      document.getElementById('formMsg').textContent = '✅ ¡Inscripción enviada! Te contactaremos por correo para el pago.';
-      form.reset();
-      btn.textContent = '¡Inscrito!';
+      // 2) Registra en Supabase (contador compartido)
+      return registrarInscripcionSupabase(nombre, email, ciudad).then(function () {
+        sumarInscrito();
+        var newCount = contarInscritos();
+        var cupoEl = document.getElementById('cupoTexto');
+        if (cupoEl) cupoEl.textContent = 'Quedan ' + (CUPO_MAX - newCount) + ' de ' + CUPO_MAX + ' cupos';
+        document.getElementById('formMsg').style.display = 'block';
+        document.getElementById('formMsg').textContent = '✅ ¡Inscripción enviada! Te contactaremos por correo para el pago.';
+        form.reset();
+        btn.textContent = '¡Inscrito!';
+      });
     } else {
-      alert('Hubo un problema al enviar. Intenta de nuevo.');
-      btn.disabled = false;
-      btn.textContent = 'Inscribirme — $25 USD';
+      throw new Error('web3forms');
     }
   })
   .catch(function () {
-    alert('Error de conexión. Intenta de nuevo.');
+    alert('Hubo un problema al enviar. Intenta de nuevo.');
     btn.disabled = false;
     btn.textContent = 'Inscribirme — $25 USD';
   });
@@ -537,11 +598,12 @@ document.getElementById('inscForm').addEventListener('submit', function (e) {
 // Panel admin oculto: agrega ?admin a la URL para ver el contador
 (function () {
   if (window.location.search.indexOf('admin') !== -1) {
-    var adminPanel = document.createElement('div');
-    adminPanel.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#0a1e3c;color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;z-index:2000;box-shadow:0 10px 30px rgba(0,0,0,.3);';
-    adminPanel.innerHTML = 'Inscritos: <b style="color:#16a34a;">' + contarInscritos() + '</b> / ' + CUPO_MAX +
-      ' &nbsp;<button onclick="var n=prompt(\'Ajustar numero de inscritos\',localStorage.getItem(\'capacidadInscritos\')||\'0\');if(n!==null){localStorage.setItem(\'capacidadInscritos\',n);location.reload();}" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;">Ajustar</button>';
-    document.body.appendChild(adminPanel);
+    actualizarCupoDesdeSupabase().then(function (n) {
+      var adminPanel = document.createElement('div');
+      adminPanel.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#0a1e3c;color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;z-index:2000;box-shadow:0 10px 30px rgba(0,0,0,.3);';
+      adminPanel.innerHTML = 'Inscritos (real): <b style="color:#16a34a;">' + n + '</b> / ' + CUPO_MAX;
+      document.body.appendChild(adminPanel);
+    });
   }
 })();
 </script>
