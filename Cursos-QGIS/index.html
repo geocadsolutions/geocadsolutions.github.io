@@ -595,18 +595,6 @@ document.getElementById('inscForm').addEventListener('submit', function (e) {
     btn.textContent = 'Inscribirme — $25 USD';
   });
 });
-
-// Panel admin oculto: agrega ?admin a la URL para ver el contador
-(function () {
-  if (window.location.search.indexOf('admin') !== -1) {
-    actualizarCupoDesdeSupabase().then(function (n) {
-      var adminPanel = document.createElement('div');
-      adminPanel.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#0a1e3c;color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;z-index:2000;box-shadow:0 10px 30px rgba(0,0,0,.3);';
-      adminPanel.innerHTML = 'Inscritos (real): <b style="color:#16a34a;">' + n + '</b> / ' + CUPO_MAX;
-      document.body.appendChild(adminPanel);
-    });
-  }
-})();
 </script>
 
 </body>
