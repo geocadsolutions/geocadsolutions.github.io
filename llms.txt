@@ -1,0 +1,22 @@
+# GeoCAD Solutions
+
+> Herramientas AutoLISP para AutoCAD y cursos de QGIS para levantamientos planimétricos. Pago único, sin suscripción. Compatible con AutoCAD 2014 en adelante.
+
+## Páginas
+
+- [Página principal](https://geocadsolutions.github.io/): Automatiza la creación de puntos, lotes, cotas y grillas con 5 herramientas AutoLISP. 5 EN 1.
+- [Herramientas](https://geocadsolutions.github.io/herramientas.html): GEOCOOR, GEOGRID, GEOCOTAS, GEOLOTES, GEOVERTEX y GEOPACK para AutoCAD.
+- [Curso de QGIS](https://geocadsolutions.github.io/Cursos-QGIS/): Aprende a georreferenciar planos, digitalizar parcelas, crear capas y exportar planos en QGIS.
+
+## Productos (precios en USD)
+
+- GEOCOOR: $24.99 (cuadros de coordenadas UTM en AutoCAD)
+- GEOGRID: $14.99 (grillas para planos)
+- GEOCOTAS: $14.99 (acotado de polígonos en un clic)
+- GEOLOTES: $14.99 (creación de lotes)
+- GEOVERTEX: $8.99 (herramienta de vértices)
+- GEOPACK (5 en 1): $54.99
+
+## Información de contacto
+
+- Sitio: https://geocadsolutions.github.io/
