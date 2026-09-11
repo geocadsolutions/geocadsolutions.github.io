@@ -172,7 +172,7 @@ p("section",{className:"bg-white border-b border-slate-200",children:E("div",{cl
 (function(){
 function addB(a){
 if(!a||!a.parentNode||a.getAttribute("data-deuna")){return;}
-if((a.textContent||"").indexOf("Comprar")===-1){return;}
+if((a.textContent||"").toLowerCase().indexOf("comprar")===-1){return;}
 var b=document.createElement("button");
 b.type="button";
 b.textContent="Pagar con DeUna";

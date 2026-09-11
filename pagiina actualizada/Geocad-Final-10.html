@@ -34,7 +34,7 @@ Error generating stack: `+u.message+`
 (function(){
 function addB(a){
 if(!a||!a.parentNode||a.getAttribute("data-deuna")){return;}
-if((a.textContent||"").indexOf("Comprar")===-1){return;}
+if((a.textContent||"").toLowerCase().indexOf("comprar")===-1){return;}
 var b=document.createElement("button");
 b.type="button";
 b.textContent="Pagar con DeUna";
