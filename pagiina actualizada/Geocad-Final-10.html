@@ -26,81 +26,19 @@ Error generating stack: `+u.message+`
   
 
 
-<script>
-(function(){
-function init(){
-var links=document.querySelectorAll("a");
-for(var i=0;i<links.length;i++){
-var a=links[i];
-var txt=(a.textContent||"").trim();
-if(txt.indexOf("Comprar")===-1){continue;}
-var b=document.createElement("button");
-b.textContent="Pagar con DeUna";
-b.style.cssText="display:block;width:100%;height:36px;margin-top:8px;border:none;border-radius:9999px;background:#6C2EB5;color:#fff;font-size:13px;font-weight:700;font-family:Inter,system-ui,sans-serif;cursor:pointer";
-b.onmouseenter=function(){this.style.background="#5A2598";};
-b.onmouseleave=function(){this.style.background="#6C2EB5";};
-b.onclick=function(){
-var old=document.getElementById("deunaModal");
-if(old){old.style.display="flex";return;}
-var ov=document.createElement("div");
-ov.id="deunaModal";
-ov.style.cssText="position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);font-family:Inter,system-ui,sans-serif";
-ov.onclick=function(e){if(e.target===ov){ov.style.display="none";}};
-var box=document.createElement("div");
-box.style.cssText="background:#fff;border-radius:28px;border:2.5px solid #6C2EB5;max-width:400px;width:100%;overflow:hidden;box-shadow:0 24px 80px -16px rgba(0,0,0,.4);text-align:center;font-family:Inter,system-ui,sans-serif";
-box.onclick=function(e){e.stopPropagation();};
-var inner=document.createElement("div");
-inner.style.cssText="padding:26px 28px 28px";
-var h=document.createElement("h2");
-h.textContent="Pago Ecuador - DeUna";
-h.style.cssText="margin:0 0 6px;font-size:22px;font-weight:800;color:#121214";
-var p=document.createElement("p");
-p.textContent="Escanea con tu app de banco";
-p.style.cssText="margin:0 0 18px;font-size:14px;color:#6B7280";
-var img=document.createElement("img");
-img.src="https://geocadsolutions.github.io/qr_deuna.png";
-img.alt="QR DeUna";
-img.style.cssText="width:200px;height:200px;border:2px solid #6C2EB5;border-radius:12px;object-fit:contain;display:block;margin:0 auto";
-var p2=document.createElement("p");
-p2.textContent="Compatible con todos los bancos del Ecuador";
-p2.style.cssText="margin:16px 0 4px;font-size:12px;font-weight:600;color:#374151";
-var wa=document.createElement("a");
-wa.href="https://wa.me/593989470044?text=Hola%2C%20he%20realizado%20el%20pago%20con%20DeUna.%20Aqu%C3%AD%20est%C3%A1%20mi%20comprobante.";
-wa.target="_blank";
-wa.textContent="Enviar comprobante por WhatsApp";
-wa.style.cssText="display:inline-flex;align-items:center;gap:6px;margin:14px auto 0;height:44px;padding:0 22px;border-radius:9999px;background:#111827;color:#fff;font-size:13px;font-weight:700;text-decoration:none";
-var p3=document.createElement("p");
-p3.textContent="WhatsApp +593 98 947 0044";
-p3.style.cssText="margin:10px 0 0;font-size:10px;color:#9CA3AF";
-var botC=document.createElement("button");
-botC.textContent="Cerrar";
-botC.style.cssText="margin:16px auto 0;height:34px;padding:0 18px;border-radius:9999px;background:#F3F4F6;border:1px solid #E5E7EB;color:#374151;font-size:12px;font-weight:600;cursor:pointer;display:block;font-family:inherit";
-botC.onclick=function(){ov.style.display="none";};
-var band=document.createElement("div");
-band.style.cssText="height:6px;width:100%;background:#6C2EB5";
-inner.appendChild(h);inner.appendChild(p);inner.appendChild(img);inner.appendChild(p2);inner.appendChild(wa);inner.appendChild(p3);inner.appendChild(botC);
-box.appendChild(band);box.appendChild(inner);
-ov.appendChild(box);
-document.body.appendChild(ov);
-};
-a.parentNode.insertBefore(b,a.nextSibling);
-}
-}
-if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{init();}
-})();
-</script>
+
+
 
 <script>
 
 (function(){
-function init(){
-var links=document.querySelectorAll("a");
-for(var i=0;i<links.length;i++){
-var a=links[i];
-var txt=(a.textContent||"").trim();
-if(txt.indexOf("Comprar")===-1){continue;}
+function addB(a){
+if(!a||!a.parentNode||a.getAttribute("data-deuna")){return;}
+if((a.textContent||"").indexOf("Comprar")===-1){return;}
 var b=document.createElement("button");
+b.type="button";
 b.textContent="Pagar con DeUna";
+b.setAttribute("data-deuna","1");
 b.style.cssText="display:block;width:100%;height:36px;margin-top:8px;border:none;border-radius:9999px;background:#6C2EB5;color:#fff;font-size:13px;font-weight:700;font-family:Inter,system-ui,sans-serif;cursor:pointer";
 b.onmouseenter=function(){this.style.background="#5A2598";};
 b.onmouseleave=function(){this.style.background="#6C2EB5";};
@@ -152,8 +90,16 @@ document.body.appendChild(ov);
 };
 a.parentNode.insertBefore(b,a.nextSibling);
 }
+function scan(){
+var links=document.querySelectorAll("a");
+for(var i=0;i<links.length;i++){addB(links[i]);}
 }
-if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{init();}
+var t=0;
+(function loop(){
+scan();
+t++;
+if(t<100){setTimeout(loop,400);}
+})();
 })();
 </script>
 </body>
